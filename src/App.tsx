@@ -353,7 +353,7 @@ function App() {
           </h1>
         </section>
 
-        <section >
+        <section>
           <div
             id="phone-section"
             className={`w-full md:flex bg-white h-[fit-content] lg:p-20 p-5 lg:px-40 transition-all duration-500 ${
