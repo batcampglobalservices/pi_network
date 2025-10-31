@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 
 import logo from "./img/logo.webp";
 import community from "./img/community.png";
+import heroBg from "./img/pi-background.png";
 import phone from "./img/pi_video-6.webp";
 import halfPhone from "./img/half-phone.png";
 
@@ -272,7 +273,7 @@ function App() {
       </div>
 
       <main className="pt-20">
-        <section className="relative bg-[#251538] text-white py-20 px-4 md:h-[fit-content] py-20 h-[fit-content] sm:px-6 lg:px-8">
+        <section className={`relative bg-[url(${heroBg})] bg-[cover] text-white py-20 px-4 md:h-[fit-content] py-20 h-[fit-content] sm:px-6 lg:px-8`}>
           <div className="max-w-7xl mx-auto md:px-20">
             <div className="md:flex mb-6">
               <div
