@@ -1,14 +1,22 @@
-import { Menu, X, Twitter, Facebook, Youtube, Instagram } from "lucide-react";
+import {
+  Menu,
+  X,
+  Twitter,
+  Facebook,
+  Youtube,
+  Instagram,
+  SearchIcon,
+} from "lucide-react";
 import { useState, useEffect, useRef, FormEvent } from "react";
 
 import logo from "./img/logo.webp";
 import community from "./img/community.png";
-import heroBg from "./img/pi-background.png";
 import phone from "./img/pi_video-6.webp";
 import halfPhone from "./img/half-phone.png";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchBoxOpen, setSearchBoxOpen] = useState(false);
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [scrolled, setScrolled] = useState(false);
   const [navVisible, setNavVisible] = useState(false);
@@ -45,8 +53,13 @@ function App() {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
+    setSearchBoxOpen(false)
   };
-
+  window.addEventListener("keydown",(e) => {
+    if(e.key == "Escape"){
+      setSearchBoxOpen(false);
+    }
+  })
   return (
     <div className="min-h-screen bg-[#251538]">
       <header
@@ -74,7 +87,11 @@ function App() {
               }`}
             >
               <div className="flex-shrink-0">
-                <div className={`${scrolled ? "md:h-[5vh] h-10" : "md:h-[8vh] h-10"}`}>
+                <div
+                  className={`${
+                    scrolled ? "md:h-[5vh] h-10" : "md:h-[8vh] h-10"
+                  }`}
+                >
                   <img
                     src={logo}
                     className="h-full w-full transition duration-700"
@@ -150,28 +167,34 @@ function App() {
               >
                 <a
                   href="#"
-                  className="text-[#abb8c3] hover:text-[#0693e3] transition-all duration-300 hover:scale-110 hover:rotate-12"
+                  className="text-[#abb8c3]  hover:text-white hover:translate-y-[-10px] hover:backdrop-brightness-50 transition-all duration-500 hover:scale-110"
                 >
                   <Twitter size={20} />
                 </a>
                 <a
                   href="#"
-                  className="text-[#abb8c3] hover:text-[#0693e3] transition-all duration-300 hover:scale-110 hover:rotate-12"
+                  className="text-[#abb8c3]  hover:text-white hover:translate-y-[-10px] hover:backdrop-brightness-50 transition-all duration-500 hover:scale-110"
                 >
                   <Facebook size={20} />
                 </a>
                 <a
                   href="#"
-                  className="text-[#abb8c3] hover:text-[#0693e3] transition-all duration-300 hover:scale-110 hover:rotate-12"
+                  className="text-[#abb8c3] hover:text-white hover:translate-y-[-10px] hover:backdrop-brightness-50 transition-all duration-500 hover:scale-110"
                 >
                   <Youtube size={20} />
                 </a>
                 <a
                   href="#"
-                  className="text-[#abb8c3] hover:text-[#0693e3] transition-all duration-300 hover:scale-110 hover:rotate-12"
+                  className="text-[#abb8c3] hover:text-white hover:translate-y-[-10px] hover:backdrop-brightness-50 transition-all duration-500 hover:scale-110 "
                 >
                   <Instagram size={20} />
                 </a>
+                <li className="text-[#abb8c3] hover:text-white ">
+                  <SearchIcon
+                    size={20}
+                    onClick={() => setSearchBoxOpen(!searchBoxOpen)}
+                  />
+                </li>
               </div>
             </div>
 
@@ -194,7 +217,7 @@ function App() {
           {mobileMenuOpen && (
             <div
               className={`fixed inset-0 z-40 flex flex-col justify-center items-center space-y-8 
-      bg-[#251538]/95 backdrop-blur-sm transition-all duration-500 ease-out 
+      bg-[#251538] h-[100vh] backdrop-blur-sm transition-all duration-500 ease-out 
       md:hidden ${
         mobileMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
       }
@@ -252,28 +275,48 @@ function App() {
                 >
                   <Instagram size={28} />
                 </a>
+                <a
+                  href="#"
+                  className="text-[#abb8c3] hover:text-[#0693e3] transition-transform duration-300 hover:scale-110"
+                >
+                  <SearchIcon size={28} />
+                </a>
               </div>
             </div>
           )}
         </nav>
       </header>
-      <div className="lg:h-[225px] h-[100px] hidden bg-[#593e8b] center fixed top-0 z-20 w-full text-white">
-        <div className="h-full w-full flex items-center relative lg:p-20 p-10">
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full mb-1 text-white lg:text-4xl text-xl font-[bold] font-[monospace] lg:h-20 h-10 bg-[transparent] border-b solid border-[#e48169] border-b-[3px]"
-            />
-            <p className="text-[#d7b9fa] lg:block hidden">
-              Hit Enter to Search and ESC to close{" "}
-            </p>
-          </form>
+      {searchBoxOpen && (
+        <div
+          className={`transition-all ${
+            !searchBoxOpen ? "h-[0] " : "h-[100px] lg:h-[225px]"
+          }  bg-[#593e8b] duration-500 center fixed top-0 z-20 w-full text-white`}
+          style={{ transitionDelay: "400ms" }}
+        >
+          <div
+            className={`${
+              !searchBoxOpen ? "transition-all h-[0] w-[0]" : "h-[full] w-full"
+            }flex items-center relative lg:p-20 p-10`}
+          >
+            <form onSubmit={handleSearch}>
+              <X size={20} onClick={() => setSearchBoxOpen(!searchBoxOpen)} />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full mb-1 text-white lg:text-4xl text-xl font-bold font-[monospace] lg:h-20 h-10 bg-[transparent]  solid border-[#e48169] border-b-[3px]"
+              />
+              <p className="text-[#d7b9fa] lg:block hidden">
+                Hit Enter to Search and ESC to close{" "}
+              </p>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
 
       <main className="pt-20">
-        <section className={`relative bg-[url(${heroBg})] bg-[cover] text-white py-20 px-4 md:h-[fit-content] py-20 h-[fit-content] sm:px-6 lg:px-8`}>
+        <section
+          className={`relative bg-[url('./img/pi-background.png')] bg-[cover] object-[fit] text-white py-20 px-4 md:h-[fit-content] h-[fit-content] sm:px-6 lg:px-8`}
+        >
           <div className="max-w-7xl mx-auto md:px-20">
             <div className="md:flex mb-6">
               <div
@@ -414,14 +457,13 @@ function App() {
           </div>
         </section>
 
-
         <section className="py-20 px-4 sm:px-6 lg:px-40 bg-white">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-5">
               <div
                 id="feature-1"
                 data-animate
-                className={`text-center border border-[#ccc] rounded-md shadow-xl p-5 transition-all duration-1000 ${
+                className={`text-center hover:scale-105 border border-[#ccc] rounded-md shadow-xl p-5 transition-all duration-500 ${
                   isVisible["feature-1"]
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-12"
@@ -454,7 +496,7 @@ function App() {
               <div
                 id="feature-2"
                 data-animate
-                className={`text-center transition-all border border-[#ccc] rounded-md shadow-xl p-5  duration-1000 delay-200 ${
+                className={`text-center hover:scale-105 transition-all border border-[#ccc] rounded-md shadow-xl p-5  duration-500 delay-200 ${
                   isVisible["feature-2"]
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-12"
@@ -486,7 +528,7 @@ function App() {
               <div
                 id="feature-3"
                 data-animate
-                className={`text-center transition-all duration-1000  border border-[#ccc] rounded-md shadow-xl p-5  delay-300 ${
+                className={`text-center transition-all hover:scale-105 duration-500  border border-[#ccc] rounded-md shadow-xl p-5  delay-300 ${
                   isVisible["feature-3"]
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-12"
@@ -520,7 +562,7 @@ function App() {
         </section>
 
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
-          <div className="max-w-5xl mx-auto text-center">
+          <div className="w-full text-center">
             <h2
               id="download-title"
               data-animate
